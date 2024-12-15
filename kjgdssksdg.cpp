@@ -1,24 +1,39 @@
-#include <iostream>
-#include <Windows.h>
-#include <string>
+#include <iostream> 
 
-int main() {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    std::string text = "Ось номери: +38(067)123-45-67, +38(050)555-55-55 та +38(063)999-88-77.";
+#include <regex> 
 
-    for (size_t i = 0; i < text.size() - 16; i++) {
-        std::string part = text.substr(i, 17);
+#include <string> 
 
-        if (part[0] == '+' && part[1] == '3' && part[2] == '8' &&
-            part[3] == '(' && isdigit(part[4]) && isdigit(part[5]) && isdigit(part[6]) && part[7] == ')' &&
-            isdigit(part[8]) && isdigit(part[9]) && isdigit(part[10]) && part[11] == '-' &&
-            isdigit(part[12]) && isdigit(part[13]) && part[14] == '-' &&
-            isdigit(part[15]) && isdigit(part[16]))
-        {
-            std::cout << "Знайдено номер: " << part << std::endl;
-        }
-    }
+#include <Windows.h> 
 
-    return 0;
-}
+  
+
+int main() { 
+
+    SetConsoleCP(1251); 
+
+    SetConsoleOutputCP(1251); 
+
+    std::string text = "Ось номери: +38(067)173-15-97, +38(050)725-91-74 та +38(063)849-58-23."; 
+
+    std::regex phoneRegex(R"(\+38\(\d{3}\)\d{3}-\d{2}-\d{2})"); 
+
+  
+
+    auto numbers_begin = std::sregex_iterator(text.begin(), text.end(), phoneRegex); 
+
+    auto numbers_end = std::sregex_iterator(); 
+
+  
+
+    for (std::sregex_iterator i = numbers_begin; i != numbers_end; ++i) { 
+
+        std::cout << "Знайдено номер: " << i->str() << std::endl; 
+
+    } 
+
+  
+
+    return 0; 
+
+} 
